@@ -4,99 +4,99 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[];
+  | Json[]
 
 export type Database = {
   public: {
     Tables: {
       comment: {
         Row: {
-          content: string;
-          created_at: string;
-          created_by: string;
-          id: string;
-          post_id: string;
-        };
+          content: string
+          created_at: string
+          created_by: string
+          id: string
+          post_id: string
+        }
         Insert: {
-          content?: string;
-          created_at?: string;
-          created_by?: string;
-          id?: string;
-          post_id?: string;
-        };
+          content?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          post_id?: string
+        }
         Update: {
-          content?: string;
-          created_at?: string;
-          created_by?: string;
-          id?: string;
-          post_id?: string;
-        };
+          content?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          post_id?: string
+        }
         Relationships: [
           {
-            foreignKeyName: "public_comment_post_id_fkey";
-            columns: ["post_id"];
-            isOneToOne: false;
-            referencedRelation: "document";
-            referencedColumns: ["id"];
+            foreignKeyName: "public_comment_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "document"
+            referencedColumns: ["id"]
           }
-        ];
-      };
+        ]
+      }
       document: {
         Row: {
-          content: string;
-          created_at: string;
-          created_by: string;
-          id: string;
-          isPublished: boolean;
-          title: string;
-          updated_at: string;
-          updated_by: string;
-        };
+          content: string
+          created_at: string
+          created_by: string
+          id: string
+          isPublished: boolean
+          title: string
+          updated_at: string
+          updated_by: string
+        }
         Insert: {
-          content?: string;
-          created_at?: string;
-          created_by?: string;
-          id?: string;
-          isPublished?: boolean;
-          title?: string;
-          updated_at?: string;
-          updated_by?: string;
-        };
+          content?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          isPublished?: boolean
+          title?: string
+          updated_at?: string
+          updated_by?: string
+        }
         Update: {
-          content?: string;
-          created_at?: string;
-          created_by?: string;
-          id?: string;
-          isPublished?: boolean;
-          title?: string;
-          updated_at?: string;
-          updated_by?: string;
-        };
-        Relationships: [];
-      };
-    };
+          content?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          isPublished?: boolean
+          title?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: []
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
       authorize: {
         Args: {
-          requested_permission: Database["public"]["Enums"]["app_permission"];
-          user_id: string;
-        };
-        Returns: boolean;
-      };
-    };
+          requested_permission: Database["public"]["Enums"]["app_permission"]
+          user_id: string
+        }
+        Returns: boolean
+      }
+    }
     Enums: {
-      app_permission: "channels.delete" | "messages.delete";
-      app_role: "admin" | "moderator";
-      user_status: "ONLINE" | "OFFLINE";
-    };
+      app_permission: "channels.delete" | "messages.delete"
+      app_role: "admin" | "moderator"
+      user_status: "ONLINE" | "OFFLINE"
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
-};
+      [_ in never]: never
+    }
+  }
+}
 
 export type Tables<
   PublicTableNameOrOptions extends
@@ -109,7 +109,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R;
+      Row: infer R
     }
     ? R
     : never
@@ -117,11 +117,11 @@ export type Tables<
       Database["public"]["Views"])
   ? (Database["public"]["Tables"] &
       Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R;
+      Row: infer R
     }
     ? R
     : never
-  : never;
+  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -132,17 +132,17 @@ export type TablesInsert<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I;
+      Insert: infer I
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I;
+      Insert: infer I
     }
     ? I
     : never
-  : never;
+  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -153,17 +153,17 @@ export type TablesUpdate<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U;
+      Update: infer U
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U;
+      Update: infer U
     }
     ? U
     : never
-  : never;
+  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -176,4 +176,4 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never;
+  : never
