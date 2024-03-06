@@ -6,10 +6,10 @@ import StarterKit from "@tiptap/starter-kit";
 type EditorProps = {
   content: string;
   editable: boolean;
-  onContentUpdate?: (content: string) => void;
+  onUpdate?: (content: string, summary: string) => void;
 };
 
-const Tiptap = ({ content, editable = true, onContentUpdate }: EditorProps) => {
+const Tiptap = ({ content, editable = true, onUpdate }: EditorProps) => {
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -20,7 +20,7 @@ const Tiptap = ({ content, editable = true, onContentUpdate }: EditorProps) => {
     extensions: [StarterKit],
     content: JSON.parse(content),
     onUpdate({ editor }) {
-      onContentUpdate && onContentUpdate(JSON.stringify(editor.getJSON()));
+      onUpdate && onUpdate(JSON.stringify(editor.getJSON()), editor.getText());
     },
     editable,
   });

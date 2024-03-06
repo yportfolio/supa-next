@@ -12,6 +12,7 @@ type IContentProps = {
   userId: string;
   created_by: string;
 };
+
 export default function Content({
   documentId,
   content,
@@ -20,9 +21,12 @@ export default function Content({
 }: IContentProps) {
   const [updating, setUpdating] = useState(false);
 
-  const onContentUpdate = async (content: string) => {
+  const onUpdate = async (content: string, summary: string) => {
     setUpdating(true);
-    const { data, error } = await updateContent(content, documentId);
+    const { data, error } = await updateContent(
+      { content, summary },
+      documentId
+    );
 
     if (error) {
       console.error("error", error);
@@ -30,10 +34,7 @@ export default function Content({
     setUpdating(false);
   };
 
-  const debouncedOnContentUpdate = useCallback(
-    debounce(onContentUpdate, 1000),
-    []
-  );
+  const debouncedOnUpdate = useCallback(debounce(onUpdate, 1000), []);
 
   return (
     <div className="relative">
@@ -44,7 +45,7 @@ export default function Content({
       <Tiptap
         content={content}
         editable={userId === created_by}
-        onContentUpdate={debouncedOnContentUpdate}
+        onUpdate={debouncedOnUpdate}
       />
     </div>
   );

@@ -40,13 +40,21 @@ export async function updateTitle(title: string, id: string) {
   return { data, error };
 }
 
-export async function updateContent(content: string, id: string) {
+type IUpdateContent = {
+  content: string;
+  summary: string;
+};
+
+export async function updateContent(
+  { content, summary }: IUpdateContent,
+  id: string
+) {
   revalidatePath(`/${id}`);
 
   const supabase = createClient();
   const { data, error } = await supabase
     .from("document")
-    .update({ content: content })
+    .update({ content, summary })
     .eq("id", id)
     .select();
 

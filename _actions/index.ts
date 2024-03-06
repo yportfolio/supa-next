@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { QueryData } from "@supabase/supabase-js";
 
 export async function publishDocument(id: string) {
   const supabase = createClient();
@@ -11,4 +12,11 @@ export async function publishDocument(id: string) {
     .single();
 
   return { doc, error };
+}
+
+export async function getDocuments() {
+  const supabase = createClient();
+  const { data: docs, error } = await supabase.from("document").select();
+
+  return { docs, error };
 }

@@ -48,6 +48,7 @@ export type Database = {
           created_by: string
           id: string
           isPublished: boolean
+          summary: string
           title: string
           updated_at: string
           updated_by: string
@@ -58,6 +59,7 @@ export type Database = {
           created_by?: string
           id?: string
           isPublished?: boolean
+          summary?: string
           title?: string
           updated_at?: string
           updated_by?: string
@@ -68,6 +70,7 @@ export type Database = {
           created_by?: string
           id?: string
           isPublished?: boolean
+          summary?: string
           title?: string
           updated_at?: string
           updated_by?: string

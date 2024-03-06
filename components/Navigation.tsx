@@ -22,7 +22,7 @@ const Navigation = ({
       <div className="flex">
         <Link
           className="flex items-center font-semibold text-lg md:text-base"
-          href="#"
+          href="/"
         >
           Acme Inc
         </Link>
