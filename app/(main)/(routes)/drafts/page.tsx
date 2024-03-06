@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { toast } from "sonner";
-import NewPost from "@/app/(main)/(routes)/documents/_components/NewPost";
+import NewPost from "@/app/(main)/(routes)/drafts/_components/NewPost";
 
 const DocumentsPage = async () => {
   const supabase = createClient();

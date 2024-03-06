@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 
 interface EditorProps {
+  documentId: string;
   onContentUpdate: (value: string) => void;
   onTitleUpdate: (value: string) => void;
   initialContent?: { title: string; content: string };
@@ -19,6 +20,7 @@ interface EditorProps {
 }
 
 const Editor = ({
+  documentId,
   onContentUpdate,
   onTitleUpdate,
   initialContent,
@@ -31,7 +33,7 @@ const Editor = ({
 
   useEffect(() => {
     const channel = supabase
-      .channel("room1")
+      .channel(documentId)
       .on(
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "document" },
@@ -41,7 +43,6 @@ const Editor = ({
             title: payload.new.title,
             content: payload.new.content,
           });
-          console.log("Change received!", payload);
         }
       )
       .subscribe();
@@ -91,7 +92,7 @@ const Editor = ({
           setEditMode((pre) => !pre);
         }}
       >
-        Edit
+        {editMode ? "Close it" : "Edit it"}
       </Button>
     </div>
   );

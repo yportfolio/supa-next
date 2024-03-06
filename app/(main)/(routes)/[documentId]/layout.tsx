@@ -2,10 +2,16 @@ import { redirect } from "next/navigation";
 
 import { SearchCommand } from "@/components/search-command";
 
-import { Navigation } from "./_components/navigation";
 import { createClient } from "@/utils/supabase/server";
+import Navigation from "@/components/Navigation";
 
-const MainLayout = async ({ children }: { children: React.ReactNode }) => {
+const MainLayout = async ({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { documentId: string };
+}) => {
   const supabase = createClient();
 
   const {
@@ -13,14 +19,10 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
     error,
   } = await supabase.auth.getUser();
 
-  // if (error || !user) {
-  //   redirect("/");
-  // }
-
   return (
-    <div className="h-full flex dark:bg-[#1F1F1F]">
-      <Navigation />
-      <main className="flex-1 h-full overflow-y-auto">
+    <div className="h-full dark:bg-[#1F1F1F]">
+      <Navigation documentId={params.documentId} disablePublish />
+      <main className="h-full overflow-y-auto">
         <SearchCommand />
         {children}
       </main>

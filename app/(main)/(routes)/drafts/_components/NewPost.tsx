@@ -13,7 +13,18 @@ export default function NewPost() {
   const newPost = async () => {
     const { data: doc, error } = await supabase
       .from("document")
-      .insert({ title: "undefined", content: "empty content" })
+      .insert({
+        title: "undefined",
+        content: JSON.stringify({
+          type: "doc",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "Empty area..." }],
+            },
+          ],
+        }),
+      })
       .select();
 
     return { doc, error };
