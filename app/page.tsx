@@ -59,7 +59,7 @@ export default async function Index() {
 
       <main className="animate-in flex flex-col gap-20 max-w-4xl px-3 min-h-screen">
         {docs.map((doc) => (
-          <DocSumCard doc={doc} />
+          <DocSumCard doc={doc} key={doc.id} />
         ))}
       </main>
 

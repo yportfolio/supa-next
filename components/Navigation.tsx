@@ -18,7 +18,7 @@ const Navigation = ({
   disablePublish?: boolean;
 }) => {
   return (
-    <div className="flex items-center h-14 px-4 dark:border-gray-700 justify-between">
+    <div className="flex items-center h-14 dark:border-gray-700 justify-between">
       <div className="flex">
         <Link
           className="flex items-center font-semibold text-lg md:text-base"

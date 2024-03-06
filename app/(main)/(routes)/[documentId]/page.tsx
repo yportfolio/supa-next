@@ -1,3 +1,4 @@
+import TitleEditor from "@/app/(main)/(routes)/[documentId]/_components/TitleEditor";
 import { readDocumentById } from "@/app/_actions";
 import Tiptap from "@/components/editor/Tiptap";
 
@@ -10,5 +11,10 @@ export default async function page({
 
   if (!doc) return <div>No doc founded</div>;
 
-  return <Tiptap content={doc.content} editable={false} />;
+  return (
+    <main>
+      <TitleEditor title={doc.title} />
+      <Tiptap content={doc.content} />
+    </main>
+  );
 }

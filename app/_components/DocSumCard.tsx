@@ -22,7 +22,7 @@ export default function DocSumCard({ doc }: { doc: TDoc }) {
   return (
     <Card className="w-full">
       <CardHeader className="h-[40px] overflow-clip">
-        <CardTitle>{doc.title} </CardTitle>
+        <CardTitle>{doc.title}</CardTitle>
       </CardHeader>
       <CardContent className="h-[140px] overflow-clip">
         {doc.summary}

@@ -15,6 +15,7 @@ const DocumentIdPage = async ({
     <div className="pb-40 md:max-w-3xl lg:max-w-4xl mx-auto h-screen">
       <Content
         documentId={params.documentId}
+        title={doc.title}
         content={doc.content}
         userId={user?.id || ""}
         created_by={doc.created_by}

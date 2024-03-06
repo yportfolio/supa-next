@@ -1,5 +1,9 @@
 "use client";
-import { updateContent } from "@/app/(main)/(routes)/drafts/[documentId]/_actions";
+import TitleEditor from "@/app/(main)/(routes)/[documentId]/_components/TitleEditor";
+import {
+  updateContent,
+  updateTitle,
+} from "@/app/(main)/(routes)/drafts/[documentId]/_actions";
 import Tiptap from "@/components/editor/Tiptap";
 import { debounce } from "@/utils/performance/debounce";
 import { RefreshCw } from "lucide-react";
@@ -8,6 +12,7 @@ import React, { useCallback, useState } from "react";
 
 type IContentProps = {
   documentId: string;
+  title: string;
   content: string;
   userId: string;
   created_by: string;
@@ -15,26 +20,33 @@ type IContentProps = {
 
 export default function Content({
   documentId,
+  title,
   content,
   userId,
   created_by,
 }: IContentProps) {
   const [updating, setUpdating] = useState(false);
 
-  const onUpdate = async (content: string, summary: string) => {
+  // Function to handle editing
+  const onTitleUpdate = async (title: string) => {
     setUpdating(true);
-    const { data, error } = await updateContent(
-      { content, summary },
-      documentId
-    );
+    await updateTitle(title, documentId);
 
-    if (error) {
-      console.error("error", error);
-    }
     setUpdating(false);
   };
 
-  const debouncedOnUpdate = useCallback(debounce(onUpdate, 1000), []);
+  const onContentUpdate = async (content: string, summary: string) => {
+    setUpdating(true);
+    await updateContent({ content, summary }, documentId);
+
+    setUpdating(false);
+  };
+
+  const debouncedOnTitleUpdate = useCallback(debounce(onTitleUpdate, 1000), []);
+  const debouncedOnContentUpdate = useCallback(
+    debounce(onContentUpdate, 1000),
+    []
+  );
 
   return (
     <div className="relative">
@@ -42,10 +54,12 @@ export default function Content({
         {updating ? "updating..." : "saved"}
       </span>
 
+      <TitleEditor title={title} editable onUpdate={debouncedOnTitleUpdate} />
+
       <Tiptap
         content={content}
         editable={userId === created_by}
-        onUpdate={debouncedOnUpdate}
+        onUpdate={debouncedOnContentUpdate}
       />
     </div>
   );

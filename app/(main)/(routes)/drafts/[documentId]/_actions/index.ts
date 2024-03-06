@@ -26,6 +26,8 @@ export async function updateDocumentById(id: string, completed: boolean) {
 }
 
 export async function updateTitle(title: string, id: string) {
+  revalidatePath(`/${id}`);
+
   const supabase = createClient();
   const {
     data: { user },
