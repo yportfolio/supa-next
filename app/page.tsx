@@ -11,8 +11,6 @@ import { AlertCircleIcon } from "lucide-react";
 import DocSumCard from "@/app/_components/DocSumCard";
 import { Tables } from "@/types/database.types";
 
-type TDoc = Tables<"document">;
-
 export default async function Index() {
   const canInitSupabaseClient = () => {
     // This function is just for the interactive tutorial.

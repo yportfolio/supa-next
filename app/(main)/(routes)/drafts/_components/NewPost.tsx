@@ -14,7 +14,7 @@ export default function NewPost() {
     const { data: doc, error } = await supabase
       .from("document")
       .insert({
-        title: "undefined",
+        title: "Write your title here",
         content: JSON.stringify({
           type: "doc",
           content: [
@@ -36,7 +36,7 @@ export default function NewPost() {
         throw new Error(`doc creating error, ${error?.code}`);
       }
 
-      router.push(`/documents/${doc[0].id}`);
+      router.push(`/drafts/${doc[0].id}`);
     });
 
     toast.promise(promise, {
