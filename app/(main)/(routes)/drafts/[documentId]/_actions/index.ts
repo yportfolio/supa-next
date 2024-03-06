@@ -41,6 +41,8 @@ export async function updateTitle(title: string, id: string) {
 }
 
 export async function updateContent(content: string, id: string) {
+  revalidatePath(`/${id}`);
+
   const supabase = createClient();
   const { data, error } = await supabase
     .from("document")
