@@ -14,27 +14,34 @@ export type Database = {
           content: string;
           created_at: string;
           created_by: string;
+          document_id: string;
           id: string;
-          post_id: string;
         };
         Insert: {
           content?: string;
           created_at?: string;
           created_by?: string;
+          document_id?: string;
           id?: string;
-          post_id?: string;
         };
         Update: {
           content?: string;
           created_at?: string;
           created_by?: string;
+          document_id?: string;
           id?: string;
-          post_id?: string;
         };
         Relationships: [
           {
+            foreignKeyName: "public_comment_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
             foreignKeyName: "public_comment_post_id_fkey";
-            columns: ["post_id"];
+            columns: ["document_id"];
             isOneToOne: false;
             referencedRelation: "document";
             referencedColumns: ["id"];
@@ -75,7 +82,83 @@ export type Database = {
           updated_at?: string;
           updated_by?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "public_document_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      like: {
+        Row: {
+          created_at: string;
+          created_by: string;
+          document_id: string;
+          id: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string;
+          document_id: string;
+          id?: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string;
+          document_id?: string;
+          id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "public_like_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "public_like_document_id_fkey";
+            columns: ["document_id"];
+            isOneToOne: false;
+            referencedRelation: "document";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      profiles: {
+        Row: {
+          avatar_url: string;
+          created_at: string;
+          first_name: string;
+          id: string;
+          last_name: string;
+        };
+        Insert: {
+          avatar_url?: string;
+          created_at?: string;
+          first_name?: string;
+          id?: string;
+          last_name?: string;
+        };
+        Update: {
+          avatar_url?: string;
+          created_at?: string;
+          first_name?: string;
+          id?: string;
+          last_name?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "public_user_id_fkey";
+            columns: ["id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
     };
     Views: {
